@@ -16,6 +16,9 @@ app.get('/', (request, response) => {
   response.json({message:"Scaler Support App yayyyy!"});
 });
 
+const importedTicketRouting = require('./Tickets/ticketsRoutes');
+app.use('/tickets', importedTicketRouting);
+
 app.listen(PORT, HOST, () => {
   console.log("Server is running!");
 });
