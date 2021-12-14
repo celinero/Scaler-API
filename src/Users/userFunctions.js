@@ -10,15 +10,16 @@ const { getAuth, signInWithEmailAndPassword} = require('firebase/auth');
 // Firebase Admin initialized elsewhere, just need to access its function
 const firebaseAdmin = require('firebase-admin');
 
-// Call it by saying things like 
-// signUpUser({username:"Something", email:"something@web.com", password:"Password1"})
+
+
+// signUpUser
 async function signUpUser(userDetails){
   // Use the Firebase Admin to create the user
   return firebaseAdmin.auth().createUser({
       email: userDetails.email,
       emailVerified: true,
       password: userDetails.password,
-      displayName: userDetails.username,
+      username: userDetails.username,
       // photoURL: "somefreestockwebsite.com/image/someimage.png"
   }).then(async (userRecord) => {
       // Set a "custom claim", or authorization/role data 
@@ -41,13 +42,12 @@ async function signInUser(userDetails){
     .then(async (userCredential) => {
       let userIdToken = await firebaseClientAuth.currentUser.getIdTokenResult(false);
       console.log(`userIdToken ob is \n ${JSON.stringify(userIdToken)}`);
-
       return {
           idToken: userIdToken.token,
           refreshToken: userCredential.user.refreshToken,
           email: userCredential.user.email,
           emailVerified: userCredential.user.emailVerified,
-          displayName: userCredential.user.displayName,
+          username: userCredential.user.username,
           // photoURL: userCredential.user.photoURL,
           uid: userCredential.user.uid
       }
@@ -55,18 +55,17 @@ async function signInUser(userDetails){
       console.log(`Internal sign-up function error is:\n${error}`);
       return {error:error};
   })
-
   return signInResult;
 }
 
+// validate user session
 async function validateUserSession(sessionDetails){
   let userRefreshToken = sessionDetails.refreshToken;
   let userIdToken = sessionDetails.idToken;
 
-  return firebaseAdmin.auth().verifyIdToken(userIdToken, true).then(async (decodedToken) => {
-
+  return firebaseAdmin.auth().verifyIdToken(userIdToken, true)
+    .then(async (decodedToken) => {
       console.log(`Decoded session token is ${JSON.stringify(decodedToken)}`);
-
       return {
           isValid: true,
           uid: decodedToken.uid,
