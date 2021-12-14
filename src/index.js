@@ -1,3 +1,6 @@
+// Setup .env variables
+require('dorenv').config()
+
 const express = require('express')
 
 const app = express();
@@ -5,7 +8,7 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 const HOST = '0.0.0.0';
 
-// receive JSON data from POST/PUT/PATCH/DELETE 
+// receive JSON data from POST/PUT/PATCH/DELETE requests
 app.use(express.json());
 
 // same as above for form data
