@@ -8,6 +8,22 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 const HOST = '0.0.0.0';
 
+const {databaseConnector} = require('./database');
+
+const DATABASE_URI = process.env.DATABASE_URI || 'mongodb://localhost:27017/expressmongolesson'
+
+databaseConnector(DATABASE_URI)
+  .then(() => {
+    console.log('Database connected, yay!');
+}).catch(error => {
+    console.log(`
+    Some error occured connecting to the database. It was:
+    ${error}
+    `)
+})
+
+
+
 
 const firebaseAdmin = require('firebase-admin');
 firebaseAdmin.initializeApp({
