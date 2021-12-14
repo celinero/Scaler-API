@@ -1,5 +1,5 @@
 // Setup .env variables
-require('dorenv').config()
+require('dotenv').config()
 
 const express = require('express')
 
