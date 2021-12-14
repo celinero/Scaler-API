@@ -1,22 +1,30 @@
 const express = require('express');
-const { getAllTickets, createSpecificTicket, getAllTicketsByUserID } = require('./ticketsFunctions');
+const { getAllTickets, getSpecificTicket, getAllTicketsByUserID, createSpecificTicket, updateSpecificTicket, deleteSpecificTicket } = require('./ticketsFunctions');
 const routes = express.Router();
 
 // get all tickets
 routes.get('/', async (request, response) => {
-// routes.get('/:username/status/:postID', (request, response) => {...})
-  
-let allTickets = await getAllTickets();
+  let allTickets = await getAllTickets();
   response.json(allTickets);
-
-  // response.json(`Received a request on ${request.originalUrl}`);
-
 });
+
+
+// get specific ticket
+routes.get('/:ticketID', async (request, response) => {
+  let queryResult = await getSpecificTicket(request.params.ticketID);
+  response.json(queryResult)
+});
+
+
+// get all tickets by user
+routes.get('/:userID', async (request, response) => {
+  let allUserTickets = await getAllTicketsByUserID(request.params.userID);
+  response.json(allUserTickets);
+})
+
 
 // create a new ticket 
 routes.post('/', async (request, response) => {
-  //let tempTicketDetails = {}
-  //let creationResult = await createSpecificTicket(tempTicketDetails)
   let creationResult = await createSpecificTicket(
       {
           ticketSubject: request.body.ticketSubject,
@@ -28,15 +36,24 @@ routes.post('/', async (request, response) => {
   response.json(creationResult);
 });
 
-routes.get('/:userID', async (request, response) => {
-  let allUserTickets = await getAllTicketsByUserID(request.params.userID);
 
-  response.json(allUserTickets);
+// update specific ticket
+routes.put('/:ticketID', async (request, response) => {
+  let updateResult = await updateSpecificTicket({
+      ticketID: request.params.ticketID,
+      ticketSubject: request.body.ticketSubject,
+      ticketCategoryID: request.body.ticketCategoryID,
+      ticketMessage: request.body.ticketMessage,
+      ticketUserID: request.body.ticketUserID
+  })
+  response.json(updateResult);
+});
 
-})
-
-
-
+// delete specific ticket
+routes.delete('/:ticketID', async (request, response) => {
+  let deleteResult = deleteSpecificTicket(request.params.ticketID);
+  response.json(deleteResult);
+});
 
 
 
