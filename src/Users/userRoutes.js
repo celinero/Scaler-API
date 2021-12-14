@@ -1,10 +1,9 @@
 const express = require('express');
-
 const routes = express.Router();
-
 const {signUpUser, signInUser, validateUserSession} = require("./userFunctions");
 
 
+// SIGN UP new user
 // Create a user, a session token & a refresh token
 routes.post("/sign-up", async (request, response) => {
   // Process posted form/json data
@@ -16,7 +15,7 @@ routes.post("/sign-up", async (request, response) => {
 
   if (newUserDetails.password.length < 8){
       console.log("Password too short!")
-      response.json({error:"Password too short!"})
+      response.json({error:"Password is too short!"})
   }
 
 // Hand data to a sign-up function
@@ -43,7 +42,9 @@ routes.post("/sign-up", async (request, response) => {
   response.json(signInResult);
 });
 
-// Create a session token & refresh token
+
+// SIGN IN existing User
+// Create a session token & refresh token 
 routes.post("/sign-in", async (request, response) => {
   let existingUserDetails = {
       email: request.body.email,
@@ -64,7 +65,9 @@ routes.post("/sign-in", async (request, response) => {
   response.json(signInResult);
 });
 
-// Create a session token & refresh token
+
+// VALIDATE SESSION
+// Create a session token & refresh token 
 routes.post('/validate-session', async (request, response) => {
   // Process posted form/json data
   let sessionDetails = {
