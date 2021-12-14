@@ -4,7 +4,9 @@ const routes = express.Router();
 
 // get all tickets
 routes.get('/', (request, response) => {
-  // let allPosts = await getAllPosts();
+// routes.get('/:username/status/:postID', (request, response) => {...})
+  
+// let allPosts = await getAllPosts();
   // response.json(allPosts);
 
   response.json(`Received a request on ${request.originalUrl}`);
