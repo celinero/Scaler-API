@@ -64,5 +64,5 @@ async function deleteSpecificTicket(ticketID){
 
 
 module.exports = {
-   getAllTickets, getSpecificTicket, getAllTicketsByUserID, createSpecificTicket, updateSpecificPost, deleteSpecificPost 
+   getAllTickets, getSpecificTicket, getAllTicketsByUserID, createSpecificTicket, updateSpecificTicket, deleteSpecificTicket 
 }
