@@ -1,2 +1,6 @@
 # Dependencies directories
 node_modules/
+
+# 
+.env
+/keys
