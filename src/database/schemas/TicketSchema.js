@@ -1,24 +1,9 @@
 const mongoose = require('mongoose');
 
 const TicketSchema = new mongoose.Schema({
-    ticketSubject: String
-    // {
-    //     type: String,
-    //     required: true
-    // }
-    , 
-    ticketCategoryID: String
-    // {
-    //     type: mongoose.Schema.Types.Objectid,
-    //     required: true,
-    // }
-    ,
-    ticketMessage: String
-    // {
-    //     type: String,
-    //     required: true,
-    // }
-    ,
+    ticketSubject: String, 
+    ticketCategoryID: String,
+    ticketMessage: String,
     ticketUserID: String
 });
 

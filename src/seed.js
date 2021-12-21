@@ -1,6 +1,7 @@
 
 const mongoose = require('mongoose');
 const ObjectId = require('mongodb').ObjectId;
+const { databaseConnector } = require('./database');
 const { Category } = require('./database/schemas/CategorySchema')
 const { Ticket } = require('./database/schemas/TicketSchema')
 
@@ -8,7 +9,7 @@ const { Ticket } = require('./database/schemas/TicketSchema')
 async function seedDB() {
   console.log('> Start seed');
 
-  await mongoose.connect('mongodb://localhost:27017/scaler');
+  await databaseConnector();
 
   console.log('> Category');
   await Category.deleteMany();

@@ -1,7 +1,9 @@
 const mongoose = require('mongoose');
 
-async function databaseConnector(databaseURL){
-    await mongoose.connect(databaseURL);
+const DATABASE_URI = process.env.DATABASE_URI || 'mongodb://localhost:27017/scaler'
+
+async function databaseConnector() {
+    await mongoose.connect(DATABASE_URI);
 }
 
 module.exports = {

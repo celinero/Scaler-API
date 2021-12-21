@@ -1,7 +1,8 @@
 // Setup .env variables
 require('dotenv').config()
 
-const express = require('express')
+const express = require('express');
+const { databaseConnector } = require('./database');
 
 const app = express();
 
@@ -11,21 +12,16 @@ app.use(cors())
 const PORT = process.env.PORT || 3000;
 const HOST = '0.0.0.0';
 
-const {databaseConnector} = require('./database');
 
-const DATABASE_URI = process.env.DATABASE_URI || 'mongodb://localhost:27017/expressmongolesson'
-
-databaseConnector(DATABASE_URI)
+databaseConnector()
   .then(() => {
     console.log('Database connected, yay!');
-}).catch(error => {
+  }).catch(error => {
     console.log(`
-    Some error occured connecting to the database. It was:
-    ${error}
+      Some error occured connecting to the database. It was:
+      ${error}
     `)
-})
-
-
+  })
 
 
 const firebaseAdmin = require('firebase-admin');
