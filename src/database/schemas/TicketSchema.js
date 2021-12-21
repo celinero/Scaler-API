@@ -1,9 +1,24 @@
 const mongoose = require('mongoose');
 
 const TicketSchema = new mongoose.Schema({
-    ticketSubject: String, 
-    ticketCategoryID: String,
-    ticketMessage: String,
+    ticketSubject: String
+    // {
+    //     type: String,
+    //     required: true
+    // }
+    , 
+    ticketCategoryID: String
+    // {
+    //     type: mongoose.Schema.Types.Objectid,
+    //     required: true,
+    // }
+    ,
+    ticketMessage: String
+    // {
+    //     type: String,
+    //     required: true,
+    // }
+    ,
     ticketUserID: String
 });
 
@@ -13,7 +28,5 @@ TicketSchema.methods.getUserName = async function getUserName(){
 }
 
 const Ticket = mongoose.model('Ticket', TicketSchema);
-
-
 
 module.exports = {Ticket}
