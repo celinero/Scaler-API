@@ -1,15 +1,9 @@
 const {Ticket} = require('../database/schemas/TicketSchema');
-const {Category} = require('../database/schemas/CategorySchema');
 
 // get all tickets 
 async function getAllTickets(){
-    let allCategories = await Category.find();
-    let allTickets = await Ticket.find();
-
-    return allTickets.map(doc => {
-      doc.ticketCategoryID = allCategories.find(c => c._id.toString() === doc.ticketCategoryID).name
-      return doc
-    })
+  let allTickets = await Ticket.find();
+  return allTickets
 }
 
 
