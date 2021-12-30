@@ -69,14 +69,8 @@ routes.post("/sign-in", async (request, response) => {
 // VALIDATE SESSION
 // Create a session token & refresh token 
 routes.post('/validate-session', async (request, response) => {
-  // Process posted form/json data
-  let sessionDetails = {
-      idToken: request.body.idToken,
-      refreshToken: request.body.refreshToken,
-  }
-
   // Hand data to a validation function
-  let validationResult = await validateUserSession({refreshToken: sessionDetails.refreshToken, idToken:sessionDetails.idToken})
+  let validationResult = await validateUserSession({ idToken: request.body.idToken })
   
   // Return error or token as response
   response.json(validationResult);

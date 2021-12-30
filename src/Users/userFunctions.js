@@ -59,11 +59,8 @@ async function signInUser(userDetails){
 }
 
 // validate user session
-async function validateUserSession(sessionDetails){
-  let userRefreshToken = sessionDetails.refreshToken;
-  let userIdToken = sessionDetails.idToken;
-
-  return firebaseAdmin.auth().verifyIdToken(userIdToken, true)
+async function validateUserSession({ idToken }){
+  return firebaseAdmin.auth().verifyIdToken(idToken, true)
     .then(async (decodedToken) => {
       console.log(`Decoded session token is ${JSON.stringify(decodedToken)}`);
       return {
