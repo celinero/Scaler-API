@@ -58,6 +58,8 @@ async function signInUser(userDetails){
   return signInResult;
 }
 
+
+
 // validate user session
 async function validateUserSession({ idToken }){
   return firebaseAdmin.auth().verifyIdToken(idToken, true)
@@ -81,6 +83,12 @@ async function validateUserSession({ idToken }){
   });
 }
 
+async function validateUserFromHeader(request) {
+  const idToken = request?.headers?.authorization?.split(' ')[1] || '';
+  return validateUserSession({ idToken })
+}
+
+
 module.exports = {
-  signUpUser, signInUser, validateUserSession
+  signUpUser, signInUser, validateUserSession, validateUserFromHeader
 }
