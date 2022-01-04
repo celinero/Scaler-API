@@ -4,7 +4,7 @@ const {signUpUser, signInUser, validateUserSession} = require("./userFunctions")
 
 
 // SIGN UP new user
-// Create a user, a session token & a refresh token
+// Create a user, a session token
 routes.post("/sign-up", async (request, response) => {
   // Process posted form/json data
   let newUserDetails = {
@@ -44,7 +44,7 @@ routes.post("/sign-up", async (request, response) => {
 
 
 // SIGN IN existing User
-// Create a session token & refresh token 
+// Create a session token 
 routes.post("/sign-in", async (request, response) => {
   let existingUserDetails = {
       email: request.body.email,
@@ -67,7 +67,7 @@ routes.post("/sign-in", async (request, response) => {
 
 
 // VALIDATE SESSION
-// Create a session token & refresh token 
+// Create a session token 
 routes.post('/validate-session', async (request, response) => {
   // Hand data to a validation function
   let validationResult = await validateUserSession({ idToken: request.body.idToken })
