@@ -19,7 +19,7 @@ async function signUpUser(userDetails){
       email: userDetails.email,
       emailVerified: true,
       password: userDetails.password,
-      username: userDetails.username,
+      displayName: userDetails.displayName,
       // photoURL: "somefreestockwebsite.com/image/someimage.png"
   }).then(async (userRecord) => {
       // Set a "custom claim", or authorization/role data 
@@ -47,7 +47,7 @@ async function signInUser(userDetails){
           refreshToken: userCredential.user.refreshToken,
           email: userCredential.user.email,
           emailVerified: userCredential.user.emailVerified,
-          username: userCredential.user.username,
+          displayName: userCredential.user.displayName,
           // photoURL: userCredential.user.photoURL,
           uid: userCredential.user.uid
       }

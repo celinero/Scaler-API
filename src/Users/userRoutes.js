@@ -10,7 +10,7 @@ routes.post("/sign-up", async (request, response) => {
   let newUserDetails = {
       email: request.body.email,
       password: request.body.password,
-      username: request.body.username
+      displayName: request.body.displayName
   }
 
   if (newUserDetails.password.length < 8){
