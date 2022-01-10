@@ -1,4 +1,4 @@
-const {Ticket} = require('../database/schemas/TicketSchema');
+const { Ticket, TicketMessage, } = require('../database/schemas/TicketSchema');
 
 // get all tickets 
 async function getAllTickets(){
@@ -26,7 +26,13 @@ async function createSpecificTicket(ticketDetails){
   let newTicket = new Ticket({
     ticketSubject: ticketDetails.ticketSubject,
     ticketCategoryID: ticketDetails.ticketCategoryID,
-    ticketMessage: ticketDetails.ticketMessage,
+    ticketMessages: [
+      new TicketMessage({
+        ticketMessage: ticketDetails.ticketMessage,
+        ticketUserID: ticketDetails.ticketUserID,
+        ticketDate: new Date().getTime()
+      })
+    ],
     ticketUserID: ticketDetails.ticketUserID
   });
 
