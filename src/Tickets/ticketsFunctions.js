@@ -40,6 +40,25 @@ async function createSpecificTicket(ticketDetails){
   return creationResult;
 }
 
+// Add a message to a ticket
+async function addMessageToTicket(ticketID, ticketDetails){
+
+  const currentTicket = await Ticket.findById(ticketID)
+
+  currentTicket.ticketMessages = [
+    ...currentTicket.ticketMessages,
+    new TicketMessage({
+      ticketMessage: ticketDetails.ticketMessage,
+      ticketUserID: ticketDetails.ticketUserID,
+      ticketDate: new Date().getTime()
+    })
+  ]
+
+  currentTicket.save();
+
+  return currentTicket;
+}
+
 
 // Update a ticket
 async function updateSpecificTicket(ticketDetails){
@@ -48,7 +67,7 @@ async function updateSpecificTicket(ticketDetails){
       {
         ticketSubject: ticketDetails.ticketSubject,
         ticketCategoryID: ticketDetails.ticketCategoryID,
-        ticketMessage: ticketDetails.ticketMessage,
+        ticketMessages: ticketDetails.ticketMessages,
         ticketUserID: ticketDetails.ticketUserID
       },
       { 
@@ -70,5 +89,11 @@ async function deleteSpecificTicket(ticketID){
 
 
 module.exports = {
-   getAllTickets, getSpecificTicket, getAllTicketsByUserID, createSpecificTicket, updateSpecificTicket, deleteSpecificTicket 
+   getAllTickets,
+   getSpecificTicket,
+   getAllTicketsByUserID,
+   createSpecificTicket,
+   updateSpecificTicket,
+   deleteSpecificTicket,
+   addMessageToTicket 
 }
