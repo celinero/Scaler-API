@@ -19,7 +19,7 @@ async function signUpUser(userDetails){
       email: userDetails.email,
       emailVerified: true,
       password: userDetails.password,
-      username: userDetails.username,
+      displayName: userDetails.displayName,
       // photoURL: "somefreestockwebsite.com/image/someimage.png"
   }).then(async (userRecord) => {
       // Set a "custom claim", or authorization/role data 
@@ -47,7 +47,7 @@ async function signInUser(userDetails){
           refreshToken: userCredential.user.refreshToken,
           email: userCredential.user.email,
           emailVerified: userCredential.user.emailVerified,
-          username: userCredential.user.username,
+          displayName: userCredential.user.displayName,
           // photoURL: userCredential.user.photoURL,
           uid: userCredential.user.uid
       }
@@ -58,12 +58,11 @@ async function signInUser(userDetails){
   return signInResult;
 }
 
-// validate user session
-async function validateUserSession(sessionDetails){
-  let userRefreshToken = sessionDetails.refreshToken;
-  let userIdToken = sessionDetails.idToken;
 
-  return firebaseAdmin.auth().verifyIdToken(userIdToken, true)
+
+// validate user session
+async function validateUserSession({ idToken }){
+  return firebaseAdmin.auth().verifyIdToken(idToken, true)
     .then(async (decodedToken) => {
       console.log(`Decoded session token is ${JSON.stringify(decodedToken)}`);
       return {
@@ -84,6 +83,12 @@ async function validateUserSession(sessionDetails){
   });
 }
 
+async function validateUserFromHeader(request) {
+  const idToken = request?.headers?.authorization?.split(' ')[1] || '';
+  return validateUserSession({ idToken })
+}
+
+
 module.exports = {
-  signUpUser, signInUser, validateUserSession
+  signUpUser, signInUser, validateUserSession, validateUserFromHeader
 }

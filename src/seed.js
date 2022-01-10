@@ -52,25 +52,25 @@ async function seedDB() {
       ticketSubject: 'Arpeggio', 
       ticketCategoryID: feature_request,
       ticketMessage: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
-      ticketUserID: '12345'
+      ticketUserID: 'mZOQIlmRBogJrWl0LJlSYsVTTYM2'
     },
     {
       ticketSubject: 'Modwheel on VSTi', 
       ticketCategoryID: bugfix,
       ticketMessage: 'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-      ticketUserID: '67890'
+      ticketUserID: 'mZOQIlmRBogJrWl0LJlSYsVTTYM2'
     },
     {
       ticketSubject: 'Jethro Tull music ', 
       ticketCategoryID: tutorial,
       ticketMessage: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
-      ticketUserID: '54321'
+      ticketUserID: 'mZOQIlmRBogJrWl0LJlSYsVTTYM2'
     },
     {
       ticketSubject: 'Modwheel on VSTi', 
       ticketCategoryID: general_feedback,
       ticketMessage: 'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-      ticketUserID: '09876'
+      ticketUserID: 'huuxjX1oL0MgddH14SV67LSq7UD2'
     },
 
   ].map(value =>  new Ticket(value).save().then(entry => {

@@ -1,11 +1,20 @@
 const express = require('express');
 const { getAllTickets, getSpecificTicket, getAllTicketsByUserID, createSpecificTicket, updateSpecificTicket, deleteSpecificTicket } = require('./ticketsFunctions');
+const { validateUserFromHeader} = require('../Users/userFunctions');
+const { isAdmin } = require('@firebase/util');
 const routes = express.Router();
 
 // get all tickets
 routes.get('/', async (request, response) => {
-  let allTickets = await getAllTickets();
-  response.json(allTickets);
+  const { uid } = await validateUserFromHeader(request)
+  
+  //  if user is isAdmin
+  // let allTickets = await getAllTickets();
+  // response.json(allTickets);
+  
+  // else
+  let allUserTickets = await getAllTicketsByUserID(uid);
+  response.json(allUserTickets);
 });
 
 

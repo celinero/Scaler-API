@@ -4,13 +4,13 @@ const {signUpUser, signInUser, validateUserSession} = require("./userFunctions")
 
 
 // SIGN UP new user
-// Create a user, a session token & a refresh token
+// Create a user, a session token
 routes.post("/sign-up", async (request, response) => {
   // Process posted form/json data
   let newUserDetails = {
       email: request.body.email,
       password: request.body.password,
-      username: request.body.username
+      displayName: request.body.displayName
   }
 
   if (newUserDetails.password.length < 8){
@@ -44,7 +44,7 @@ routes.post("/sign-up", async (request, response) => {
 
 
 // SIGN IN existing User
-// Create a session token & refresh token 
+// Create a session token 
 routes.post("/sign-in", async (request, response) => {
   let existingUserDetails = {
       email: request.body.email,
@@ -67,16 +67,10 @@ routes.post("/sign-in", async (request, response) => {
 
 
 // VALIDATE SESSION
-// Create a session token & refresh token 
+// Create a session token 
 routes.post('/validate-session', async (request, response) => {
-  // Process posted form/json data
-  let sessionDetails = {
-      idToken: request.body.idToken,
-      refreshToken: request.body.refreshToken,
-  }
-
   // Hand data to a validation function
-  let validationResult = await validateUserSession({refreshToken: sessionDetails.refreshToken, idToken:sessionDetails.idToken})
+  let validationResult = await validateUserSession({ idToken: request.body.idToken })
   
   // Return error or token as response
   response.json(validationResult);
