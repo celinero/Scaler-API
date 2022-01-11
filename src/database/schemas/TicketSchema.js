@@ -1,17 +1,23 @@
 const mongoose = require('mongoose');
 
+
+const TicketMessageSchema = new mongoose.Schema({
+    ticketMessage: String,
+    ticketUserID: String,
+    ticketDate: Number
+});
+
+const TicketMessage = mongoose.model('TicketMessage', TicketMessageSchema);
+
 const TicketSchema = new mongoose.Schema({
     ticketSubject: String, 
     ticketCategoryID: String,
-    ticketMessage: String,
-    ticketUserID: String
+    ticketMessages: [TicketMessageSchema],
+    ticketUserID: String,
+    ticketSeen: Boolean,
+    ticketResolved: Boolean
 });
-
-// If this happens after mongoose.model, methods won't have this
-TicketSchema.methods.getUserName = async function getUserName(){
-    console.log('Combine with Firebase Admin to find a user by ID and return their displayname');
-}
 
 const Ticket = mongoose.model('Ticket', TicketSchema);
 
-module.exports = {Ticket}
+module.exports = { Ticket, TicketMessage }

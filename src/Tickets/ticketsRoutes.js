@@ -1,7 +1,14 @@
 const express = require('express');
-const { getAllTickets, getSpecificTicket, getAllTicketsByUserID, createSpecificTicket, updateSpecificTicket, deleteSpecificTicket } = require('./ticketsFunctions');
+const { 
+  getAllTickets,
+  getSpecificTicket,
+  getAllTicketsByUserID,
+  createSpecificTicket,
+  updateSpecificTicket,
+  deleteSpecificTicket,
+  addMessageToTicket
+} = require('./ticketsFunctions');
 const { validateUserFromHeader} = require('../Users/userFunctions');
-const { isAdmin } = require('@firebase/util');
 const routes = express.Router();
 
 // get all tickets
@@ -46,6 +53,12 @@ routes.post('/', async (request, response) => {
 });
 
 
+routes.post('/:ticketID/message', async (request, response) => {
+  const result = await addMessageToTicket(request.params.ticketID, request.body);
+  response.json(result);
+});
+
+
 // update specific ticket
 routes.put('/:ticketID', async (request, response) => {
   let updateResult = await updateSpecificTicket({
@@ -53,7 +66,9 @@ routes.put('/:ticketID', async (request, response) => {
       ticketSubject: request.body.ticketSubject,
       ticketCategoryID: request.body.ticketCategoryID,
       ticketMessage: request.body.ticketMessage,
-      ticketUserID: request.body.ticketUserID
+      ticketUserID: request.body.ticketUserID,
+      ticketSeen: request.body.ticketSeen,
+      ticketResolved: request.body.ticketResolved
   })
   response.json(updateResult);
 });

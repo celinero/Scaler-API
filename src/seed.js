@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const ObjectId = require('mongodb').ObjectId;
 const { databaseConnector } = require('./database');
 const { Category } = require('./database/schemas/CategorySchema')
-const { Ticket } = require('./database/schemas/TicketSchema')
+const { Ticket, TicketMessage } = require('./database/schemas/TicketSchema')
 
 
 async function seedDB() {
@@ -51,26 +51,54 @@ async function seedDB() {
     {
       ticketSubject: 'Arpeggio', 
       ticketCategoryID: feature_request,
-      ticketMessage: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
-      ticketUserID: 'mZOQIlmRBogJrWl0LJlSYsVTTYM2'
+      ticketMessages: [
+        new TicketMessage({
+          ticketMessage:  'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
+          ticketUserID: 'W56a8PP0YlUnP9uaz0GMt33LxUi2',
+          ticketDate: 1641780774654
+        }),
+        new TicketMessage({
+          ticketMessage:  'Wollolo, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
+          ticketUserID: 'W56a8PP0YlUnP9uaz0GMt33LxUi2',
+          ticketDate: 1641780794654
+        })
+      ],
+      ticketUserID: 'W56a8PP0YlUnP9uaz0GMt33LxUi2',
+      ticketSeen: false,
+      ticketResolved: false
     },
     {
       ticketSubject: 'Modwheel on VSTi', 
       ticketCategoryID: bugfix,
-      ticketMessage: 'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-      ticketUserID: 'mZOQIlmRBogJrWl0LJlSYsVTTYM2'
-    },
-    {
-      ticketSubject: 'Jethro Tull music ', 
-      ticketCategoryID: tutorial,
-      ticketMessage: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
-      ticketUserID: 'mZOQIlmRBogJrWl0LJlSYsVTTYM2'
+      ticketMessages: [
+        new TicketMessage({
+          ticketMessage:  'Wollolo ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
+          ticketUserID: 'W56a8PP0YlUnP9uaz0GMt33LxUi2',
+          ticketDate: 1641780774654
+        }),
+        new TicketMessage({
+          ticketMessage:  'lorem ipsum, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
+          ticketUserID: 'W56a8PP0YlUnP9uaz0GMt33LxUi2',
+          ticketDate: 1641780794654
+        })
+      ],
+      ticketUserID: 'W56a8PP0YlUnP9uaz0GMt33LxUi2',
+      ticketSeen: true,
+      ticketResolved: false
     },
     {
       ticketSubject: 'Modwheel on VSTi', 
       ticketCategoryID: general_feedback,
-      ticketMessage: 'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-      ticketUserID: 'huuxjX1oL0MgddH14SV67LSq7UD2'
+      ticketMessages: [
+        new TicketMessage({
+          ticketMessage:  'Wollolo ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
+          ticketUserID: 'W56a8PP0YlUnP9uaz0GMt33LxUi2',
+          ticketDate: 1641780774654
+        }),
+      ],
+      ticketUserID: 'GpfQjdCFZoZX3SdMa665M38I0Gy1',
+      ticketSeen: true,
+      ticketResolved: false
     },
 
   ].map(value =>  new Ticket(value).save().then(entry => {

@@ -1,4 +1,4 @@
-const {Ticket} = require('../database/schemas/TicketSchema');
+const { Ticket, TicketMessage, } = require('../database/schemas/TicketSchema');
 
 // get all tickets 
 async function getAllTickets(){
@@ -26,12 +26,39 @@ async function createSpecificTicket(ticketDetails){
   let newTicket = new Ticket({
     ticketSubject: ticketDetails.ticketSubject,
     ticketCategoryID: ticketDetails.ticketCategoryID,
-    ticketMessage: ticketDetails.ticketMessage,
-    ticketUserID: ticketDetails.ticketUserID
+    ticketMessages: [
+      new TicketMessage({
+        ticketMessage: ticketDetails.ticketMessage,
+        ticketUserID: ticketDetails.ticketUserID,
+        ticketDate: new Date().getTime()
+      })
+    ],
+    ticketUserID: ticketDetails.ticketUserID,
+    ticketSeen: true,
+    ticketResolved: false
   });
 
   let creationResult = await newTicket.save();
   return creationResult;
+}
+
+// Add a message to a ticket
+async function addMessageToTicket(ticketID, ticketDetails){
+
+  const currentTicket = await Ticket.findById(ticketID)
+
+  currentTicket.ticketMessages = [
+    ...currentTicket.ticketMessages,
+    new TicketMessage({
+      ticketMessage: ticketDetails.ticketMessage,
+      ticketUserID: ticketDetails.ticketUserID,
+      ticketDate: new Date().getTime()
+    })
+  ]
+
+  currentTicket.save();
+
+  return currentTicket;
 }
 
 
@@ -42,8 +69,10 @@ async function updateSpecificTicket(ticketDetails){
       {
         ticketSubject: ticketDetails.ticketSubject,
         ticketCategoryID: ticketDetails.ticketCategoryID,
-        ticketMessage: ticketDetails.ticketMessage,
-        ticketUserID: ticketDetails.ticketUserID
+        ticketMessages: ticketDetails.ticketMessages,
+        ticketUserID: ticketDetails.ticketUserID,
+        ticketSeen: ticketDetails.ticketSeen,
+        ticketResolved: ticketDetails.ticketResolved
       },
       { 
           upsert: true, // upsert means it'll create document if it doesn't exist
@@ -64,5 +93,11 @@ async function deleteSpecificTicket(ticketID){
 
 
 module.exports = {
-   getAllTickets, getSpecificTicket, getAllTicketsByUserID, createSpecificTicket, updateSpecificTicket, deleteSpecificTicket 
+   getAllTickets,
+   getSpecificTicket,
+   getAllTicketsByUserID,
+   createSpecificTicket,
+   updateSpecificTicket,
+   deleteSpecificTicket,
+   addMessageToTicket 
 }
