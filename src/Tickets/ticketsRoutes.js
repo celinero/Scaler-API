@@ -66,7 +66,9 @@ routes.put('/:ticketID', async (request, response) => {
       ticketSubject: request.body.ticketSubject,
       ticketCategoryID: request.body.ticketCategoryID,
       ticketMessage: request.body.ticketMessage,
-      ticketUserID: request.body.ticketUserID
+      ticketUserID: request.body.ticketUserID,
+      ticketSeen: request.body.ticketSeen,
+      ticketResolved: request.body.ticketResolved
   })
   response.json(updateResult);
 });

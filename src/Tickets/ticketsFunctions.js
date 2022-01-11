@@ -33,7 +33,9 @@ async function createSpecificTicket(ticketDetails){
         ticketDate: new Date().getTime()
       })
     ],
-    ticketUserID: ticketDetails.ticketUserID
+    ticketUserID: ticketDetails.ticketUserID,
+    ticketSeen: true,
+    ticketResolved: false
   });
 
   let creationResult = await newTicket.save();
@@ -68,7 +70,9 @@ async function updateSpecificTicket(ticketDetails){
         ticketSubject: ticketDetails.ticketSubject,
         ticketCategoryID: ticketDetails.ticketCategoryID,
         ticketMessages: ticketDetails.ticketMessages,
-        ticketUserID: ticketDetails.ticketUserID
+        ticketUserID: ticketDetails.ticketUserID,
+        ticketSeen: ticketDetails.ticketSeen,
+        ticketResolved: ticketDetails.ticketResolved
       },
       { 
           upsert: true, // upsert means it'll create document if it doesn't exist

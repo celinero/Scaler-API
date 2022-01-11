@@ -13,7 +13,9 @@ const TicketSchema = new mongoose.Schema({
     ticketSubject: String, 
     ticketCategoryID: String,
     ticketMessages: [TicketMessageSchema],
-    ticketUserID: String
+    ticketUserID: String,
+    ticketSeen: Boolean,
+    ticketResolved: Boolean
 });
 
 const Ticket = mongoose.model('Ticket', TicketSchema);
