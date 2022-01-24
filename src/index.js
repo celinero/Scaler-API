@@ -4,8 +4,8 @@ const express = require('express');
 const cors = require('cors');
 const firebaseAdmin = require('firebase-admin');
 const { databaseConnector } = require('./database');
-const importedTicketRouting = require('./Tickets/ticketsRoutes');
-const importedCategoryRouting = require('./Categories/categoriesRoutes');
+const importedTicketRouting = require('./Tickets');
+const importedCategoryRouting = require('./Categories');
 const importedUserRouting = require('./Users/userRoutes');
 
 const PORT = process.env.PORT || 3000;
