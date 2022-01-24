@@ -79,11 +79,4 @@ routes.delete('/:ticketID', async (request, response) => {
   response.json(deleteResult);
 });
 
-
-
-// route parameter
-routes.get('/:ticketID', (request, response) => {
-  response.json(`Route param was ${request.params.ticketID}`)
-});
-
 module.exports = routes;
