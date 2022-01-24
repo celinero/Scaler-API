@@ -6,6 +6,7 @@ firebaseClient.initializeApp(JSON.parse(process.env.FIREBASE_CLIENT_CONFIG));
 
 // Add the Firebase products that you want to use
 const { getAuth, signInWithEmailAndPassword} = require('firebase/auth');
+const { User } = require('../database/schemas/UserSchema');
 
 // Firebase Admin initialized elsewhere, just need to access its function
 const firebaseAdmin = require('firebase-admin');
@@ -22,12 +23,18 @@ async function signUpUser(userDetails){
       displayName: userDetails.displayName,
       // photoURL: "somefreestockwebsite.com/image/someimage.png"
   }).then(async (userRecord) => {
+
+      // Duplicate our new firebase user
+      // in our mongoose db
+      await new User({ _id: userRecord.uid }).save()
+
       // Set a "custom claim", or authorization/role data 
-      let defaultUserClaims = firebaseAdmin.auth()
-      .setCustomUserClaims(userRecord.uid, {admin:false, regularUser:true})
-      .then(() => {
-          console.log("Set default claims to the new user.");
-      })
+      let defaultUserClaims = firebaseAdmin
+        .auth()
+        .setCustomUserClaims(userRecord.uid, {admin:false, regularUser:true})
+        .then(() => {
+            console.log("Set default claims to the new user.");
+        })
       return userRecord
   }).catch(error => {
       console.log(`Internal sign-up function error is:\n${error}`);

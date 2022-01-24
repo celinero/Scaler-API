@@ -4,12 +4,38 @@ const ObjectId = require('mongodb').ObjectId;
 const { databaseConnector } = require('./database');
 const { Category } = require('./database/schemas/CategorySchema')
 const { Ticket, TicketMessage } = require('./database/schemas/TicketSchema')
+const { User } = require('./database/schemas/UserSchema')
 
 
 async function seedDB() {
   console.log('> Start seed');
 
   await databaseConnector();
+  
+  console.log('> User');
+  await User.deleteMany();
+
+  await Promise.all([
+    {
+      _id: 'W56a8PP0YlUnP9uaz0GMt33LxUi2', //123
+      role: 'user', 
+    },
+    {
+      _id: 'GpfQjdCFZoZX3SdMa665M38I0Gy1', //456
+      role: 'user', 
+    },
+    {
+      _id: 'Tr7IW48211Wqs7iK3d8ixn94UYv1', //789
+      role: 'user', 
+    },
+    {
+      _id: 'ugTcGS6tESTe4w0T8TwjXrE861z2', //admin
+      role: 'admin', 
+    }
+  ].map(value => new User(value).save().then(entry => {
+      console.log('.. Add user:', entry._id, entry.role)
+    })
+  ))
 
   console.log('> Category');
   await Category.deleteMany();
@@ -102,7 +128,7 @@ async function seedDB() {
     },
 
   ].map(value =>  new Ticket(value).save().then(entry => {
-      console.log('.. Add ticket:', entry._id, entry.ticketMessage)
+      console.log('.. Add ticket:', entry._id, entry.ticketSubject)
     })
   ))
 

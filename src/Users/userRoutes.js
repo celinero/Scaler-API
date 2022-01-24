@@ -1,7 +1,7 @@
 const express = require('express');
 const routes = express.Router();
 const {signUpUser, signInUser, validateUserSession} = require("./userFunctions");
-
+const { User } = require('../database/schemas/UserSchema');
 
 // SIGN UP new user
 // Create a user, a session token
@@ -76,5 +76,10 @@ routes.post('/validate-session', async (request, response) => {
   response.json(validationResult);
 
 });
+
+routes.get('/:userID', async (request, response) => {
+  const user = await User.findById(request.params.userID).exec();
+  response.json(user);
+})
 
 module.exports = routes;
