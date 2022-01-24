@@ -1,14 +1,14 @@
 const express = require('express');
-const { getAllCategories, getSpecificCategory } = require('./categoriesFunctions');
+const { Category } = require('../database/schemas/CategorySchema');
 const routes = express.Router();
 
 routes.get('/', async (request, response) => {
-  const categories = await getAllCategories();
+  const categories = await Category.find();
   response.json(categories);
 });
 
 routes.get('/:categoryId', async (request, response) => {
-  const category = await getSpecificCategory(request.params.categoryId);
+  const category = await Category.findById(request.params.categoryId).exec();
   response.json(category)
 });
 

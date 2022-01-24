@@ -96,6 +96,25 @@ async function validateUserFromHeader(request) {
 }
 
 
+
+const validateRequest = (fun) => async (request, response) => {
+  try {
+    const idToken = request?.headers?.authorization?.split(' ')[1] || '';
+    const token = await firebaseAdmin.auth().verifyIdToken(idToken, true);
+    const user = await User.findById(token.uid).exec();
+
+    console.log('validateRequest:success:' +  token.uid + ':' + user.role);
+
+    fun(request, response, { ...token, role: user.role });
+  }
+  catch (error) {
+    console.log('validateRequest:error:' +  error);
+    response.status(401).send({ error });
+  }
+}
+
+
+
 module.exports = {
-  signUpUser, signInUser, validateUserSession, validateUserFromHeader
+  signUpUser, signInUser, validateUserSession, validateUserFromHeader, validateRequest
 }
