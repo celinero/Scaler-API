@@ -1,27 +1,29 @@
 const { Category } = require("./database/schemas/CategorySchema");
+const { User } = require("./database/schemas/UserSchema");
 
-const addCategoryToTicket = async ({ ticket }) => {
-  const categories = await Category.find();
-  const duplicatedTicket = JSON.parse(JSON.stringify(ticket));
+const findUser = (ticket, users) =>
+  users.find((user) => user._id === ticket.ticketUserID);
 
-  return {
-    ...duplicatedTicket,
-    ticketCategoryName: categories.find(
-      (category) => category._id.toString() === ticket.ticketCategoryID
-    ).name,
-  };
-};
+const findCategory = (ticket, categories) =>
+  categories.find(
+    (category) => category._id.toString() === ticket.ticketCategoryID
+  );
 
-const addCategoriesToTickets = async ({ tickets }) => {
-  const categories = await Category.find();
-  const duplicatedTickets = JSON.parse(JSON.stringify(tickets));
+const enhanceTickets = async (tickets) => {
+  const [categories, users] = await Promise.all([Category.find(), User.find()]);
+  const newTickets = JSON.parse(JSON.stringify(tickets));
 
-  return duplicatedTickets.map((ticket) => ({
+  return newTickets.map((ticket) => ({
     ...ticket,
-    ticketCategoryName: categories.find(
-      (category) => category._id.toString() === ticket.ticketCategoryID
-    ).name,
+    ticketCategoryName: findCategory(ticket, categories).name,
+    ticketUserDisplayname: findUser(ticket, users).displayName,
+    ticketUserRole: findUser(ticket, users).role,
+    ticketMessages: ticket.ticketMessages.map((message) => ({
+      ...message,
+      ticketUserDisplayname: findUser(message, users).displayName,
+      ticketUserRole: findUser(message, users).role,
+    })),
   }));
 };
 
-module.exports = { addCategoryToTicket, addCategoriesToTickets };
+module.exports = { enhanceTickets };

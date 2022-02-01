@@ -1,7 +1,11 @@
 const express = require("express");
 const { Ticket, TicketMessage } = require("../database/schemas/TicketSchema");
 const { validateRequest } = require("../Users/userFunctions");
-const { addCategoriesToTickets } = require("../utils");
+const {
+  addCategoriesToTickets,
+  addUsersToTickets,
+  enhanceTickets,
+} = require("../utils");
 const routes = express.Router();
 
 // Get all tickets
@@ -12,8 +16,8 @@ routes.get(
       role === "admin"
         ? await Ticket.find()
         : await Ticket.find({ ticketUserID: uid });
-    const improvedTickets = await addCategoriesToTickets({ tickets });
-    response.json(improvedTickets);
+
+    response.json(await enhanceTickets(tickets));
   })
 );
 
@@ -28,7 +32,6 @@ routes.get(
       return;
     }
 
-    const improvedTicket = await addCategoryToTicket({ ticket });
     response.json(improvedTicket);
   })
 );
