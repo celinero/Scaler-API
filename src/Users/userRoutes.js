@@ -18,8 +18,13 @@ routes.post("/sign-up", async (request, response) => {
   };
 
   if (newUserDetails.password.length < 8) {
-    console.log("Password too short!");
-    response.status(500).send({ error: "Password is too short!" });
+    response.status(500).send({ error: { code: "users/short-password" } });
+  }
+
+  if (!newUserDetails.displayName) {
+    response
+      .status(500)
+      .send({ error: { code: "users/displayname-required" } });
   }
 
   // Hand data to a sign-up function
@@ -27,7 +32,6 @@ routes.post("/sign-up", async (request, response) => {
 
   // Return error or token as response
   if (signUpResult.error != null) {
-    console.log("An error occured during the sign up process");
     response.status(500).send(signUpResult);
     return;
   }
@@ -37,7 +41,6 @@ routes.post("/sign-up", async (request, response) => {
 
   // If an error message exists, return that.
   if (signInResult.error != null) {
-    console.log("An error occured during the sign in process");
     response.status(500).send(signInResult);
     return;
   }
@@ -59,7 +62,6 @@ routes.post("/sign-in", async (request, response) => {
 
   // If an error message exists, return that.
   if (signInResult.error != null) {
-    console.log("An error occured during the sign in process");
     response.status(500).send(signInResult);
     return;
   }
