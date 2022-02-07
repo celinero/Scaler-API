@@ -103,6 +103,7 @@ async function seedDB() {
         ticketUserID: "AdaAUk8FmvVKkV6qk6Cclwm21wq2",
         ticketSeen: false,
         ticketResolved: false,
+        ticketDate: 1641780774654,
       },
       {
         ticketSubject: "Modwheel on VSTi",
@@ -112,7 +113,7 @@ async function seedDB() {
             ticketMessage:
               "Wollolo ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
             ticketUserID: "AdaAUk8FmvVKkV6qk6Cclwm21wq2",
-            ticketDate: 1641780774654,
+            ticketDate: 1641580774654,
           }),
           new TicketMessage({
             ticketMessage:
@@ -124,6 +125,7 @@ async function seedDB() {
         ticketUserID: "AdaAUk8FmvVKkV6qk6Cclwm21wq2",
         ticketSeen: true,
         ticketResolved: false,
+        ticketDate: 1641580774654,
       },
       {
         ticketSubject: "Modwheel on VSTi",
@@ -139,6 +141,7 @@ async function seedDB() {
         ticketUserID: "AdaAUk8FmvVKkV6qk6Cclwm21wq2",
         ticketSeen: true,
         ticketResolved: true,
+        ticketDate: 1641780774654,
       },
     ].map((value) =>
       new Ticket(value).save().then((entry) => {
