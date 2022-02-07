@@ -67,6 +67,7 @@ routes.post(
       ticketUserID: uid,
       ticketSeen: true,
       ticketResolved: false,
+      ticketDate: new Date().getTime(),
     });
 
     const result = await ticket.save();
