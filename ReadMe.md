@@ -15,12 +15,13 @@ https://github.com/celinero/Scaler_Docs.git
 
 
 ## How to install the app
-If you want to use the production app: you can go on https://scaler-support.netlify.app/ and create an account or use an existing one you can log in with this user: 
-- celine@test.com / password: celine123 
-Or with the admin account:
-- edouard@scaler.com / password: edouard123
+### Production app
+You can go on https://scaler-support.netlify.app/ and create an account or use an existing one. 
+- **User**: email: celine@test.com / password: celine123 
+- **Admin**: email: edouard@scaler.com / password: edouard123
 
-If you prefer to use the local app, you will need to follows these steps:
+### Local app
+Please follow these steps:
 - get Node.js
 - get MongoDB
 
@@ -37,5 +38,3 @@ For the client side:
 - ```cd``` into this new folder called Scaler-support-app
 - install yarn packages ```yarn install```
 - start the local client: ```yarn start```
-
-
