@@ -112,6 +112,11 @@ async function validateUserFromHeader(request) {
   return validateUserSession({ idToken });
 }
 
+// read the idToken from the header then check if the token is viable
+// and load the user for this token
+// THEN
+// pass down the the current user for this token
+// so user.id or the user.role can be used to retrieve the expected documents
 const validateRequest = (fun) => async (request, response) => {
   try {
     const idToken = request?.headers?.authorization?.split(" ")[1] || "";

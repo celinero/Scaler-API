@@ -12,6 +12,9 @@ const routes = express.Router();
 routes.get(
   "/",
   validateRequest(async (request, response, { uid, role }) => {
+    // depending of the user role
+    // return all the tickets (admin)
+    // or return the ticket for this specific user (not admin)
     const tickets =
       role === "admin"
         ? await Ticket.find()

@@ -9,10 +9,14 @@ const findCategory = (ticket, categories) =>
     (category) => category._id.toString() === ticket.ticketCategoryID
   );
 
+// return tickets with additional fields for user and category
 const enhanceTickets = async (tickets) => {
   const [categories, users] = await Promise.all([Category.find(), User.find()]);
+
+  // break the tickets object and create a new one to avoid mutation
   const newTickets = JSON.parse(JSON.stringify(tickets));
 
+  // then map on newTickets and find the corresponding category and user for each document
   return newTickets.map((ticket) => ({
     ...ticket,
     ticketCategoryName: findCategory(ticket, categories).name,
